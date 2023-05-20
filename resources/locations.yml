@@ -1,0 +1,24 @@
+example-envoy:
+  x: 100
+  y: 100
+  z: 100
+  yaw: 90
+  pitch: 90
+example-envoy2:
+  x: -100
+  y: 100
+  z: 100
+  yaw: 90
+  pitch: 90
+example-envoy3:
+  x: 100
+  y: 100
+  z: -100
+  yaw: 90
+  pitch: 90
+example-envoy4:
+  x: -100
+  y: 100
+  z: -100
+  yaw: 90
+  pitch: 90

@@ -1,0 +1,9 @@
+name: BloodyEnvoys
+authors: ["Yanic"]
+description: BloodyEnvoys
+api: [4.0.0]
+version: 1.0.0
+main: Vanic\Bloody\Envoys\Main
+load: POSTWORLD
+depends:
+  - BedrockEconomy
