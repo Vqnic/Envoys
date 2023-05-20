@@ -1,4 +1,4 @@
-<img src="https://i.imgur.com/orRM0Ao.png"  width="600" height="200">
+<img src="https://i.imgur.com/orRM0Ao.png"  width="600" height="175">
 
 # WHAT IS THIS?
 This is a simple Envoys plugin which enables you to have random treasure chests spawn in your warzone! Different tiers of envoys drop a different amount of coins! 
