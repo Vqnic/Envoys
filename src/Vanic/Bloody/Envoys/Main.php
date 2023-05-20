@@ -54,7 +54,7 @@ class Main extends \pocketmine\plugin\PluginBase {
       return new Envoy(EntityDataHelper::parseLocation($nbt, $world), Utils::getEnvoySkin(1));
     }, ["Envoy"]);
     
-    $this->getScheduler()->scheduleRepeatingTask(new EnvoyTask($this), 10);
+    $this->getScheduler()->scheduleRepeatingTask(new EnvoyTask($this), 20 * $this->time);
   }
   
   public static function getInstance(): Main {
