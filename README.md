@@ -1,13 +1,15 @@
-![image](https://i.imgur.com/orRM0Ao.png)
+<img src="https://i.imgur.com/orRM0Ao.png"  width="600" height="200">
 
-# ENVOYS PLUGIN
+# WHAT IS THIS?
+This is a simple Envoys plugin which enables you to have random treasure chests spawn in your warzone! Different tiers of envoys drop a different amount of coins! 
+### Showcased here: https://www.youtube.com/watch?v=FJWu_CB14QU
 
-## REQUIREMENTS
+## ECONOMY PLUGIN REQUIREMENTS (!!!)
 https://poggit.pmmp.io/p/bedrockeconomy
 
 
 ## COMES WITH PREMADE (AND EDITABLE) MODELS
-![Envoy_1](https://github.com/Vqnic/BloodyEnvoys/assets/77890259/1cdd3612-e497-4b22-a750-aa7c223f8524)
+<img src="https://github.com/Vqnic/BloodyEnvoys/assets/77890259/1cdd3612-e497-4b22-a750-aa7c223f8524"  width="600" height="600">
 
 ## CONFIG FILE
 ```
