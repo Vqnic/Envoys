@@ -16,7 +16,6 @@ class AnimationEntity extends ItemEntity {
       VanillaItems::DIAMOND(),
       VanillaItems::EMERALD()
     ];
-    
     parent::__construct($location, $drops[$tier - 1]);
   }
   

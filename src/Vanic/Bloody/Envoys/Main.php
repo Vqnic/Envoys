@@ -25,7 +25,7 @@ class Main extends \pocketmine\plugin\PluginBase {
   public function onEnable(): void {
     
     self::$instance = $this;
-  
+    
     $this->saveResource('config.yml');
     $this->saveResource('locations.yml');
     $this->config = new Config($this->getDataFolder() . "config.yml", Config::YAML);
@@ -34,7 +34,12 @@ class Main extends \pocketmine\plugin\PluginBase {
       $this->saveResource("Envoy_$i.png");
       $this->saveResource("Envoy_$i.json");
     }
-  
+    
+    //DISABLE PLUGIN IF YOUR WORLD ISN'T CORRECT!!!
+    if (is_null($this->getServer()->getWorldManager()->getWorldByName($this->config->get('world')))){
+      $this->getServer()->getLogger()->error("The world specified in the Envoys config.yml does not exist!");
+    }
+    
     $envoys = yaml_parse_file($this->getDataFolder() . 'locations.yml');
     foreach($envoys as $envoy){
       $x = $envoy['x'];
@@ -44,8 +49,8 @@ class Main extends \pocketmine\plugin\PluginBase {
       $pitch = $envoy['pitch'];
       $this->envoys[] = new Location($x, $y, $z, $this->getServer()->getWorldManager()->getWorldByName($this->config->get('world')), $yaw, $pitch);
     }
-  
-  
+    
+    
     EntityFactory::getInstance()->register(AnimationEntity::class, function (World $world, CompoundTag $nbt): AnimationEntity {
       return new AnimationEntity(new Location(0, 0, 0, $world, 0, 0), 1);
     }, ["AnimationEntity"]);
