@@ -16,8 +16,6 @@ class Utils {
   
   private static bool $validEconomy = false;
   
-  private static $selector;
-  
   
   public static function init(Main $plugin) {
     self::$main = $plugin;
