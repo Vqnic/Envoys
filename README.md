@@ -20,7 +20,7 @@ time-to-spawn: 30  #How much time, in minutes, should it take for envoys to spaw
 
 online-to-spawn: 0 #How many players need to be online for envoys to spawn? Set to zero to disable!
 
-world: "KitPVP" #Which world should the envoys spawn in?
+world: "world" #Which world should the envoys spawn in?
 
 #TIER I ENVOY
 min-coins-t1: 12500
