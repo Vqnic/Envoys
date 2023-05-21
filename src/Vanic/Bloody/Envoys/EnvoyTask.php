@@ -4,7 +4,6 @@ namespace Vanic\Bloody\Envoys;
 
 use pocketmine\player\Player;
 use pocketmine\scheduler\Task;
-use pocketmine\entity\Location;
 use Vanic\Bloody\Envoys\Entity\Envoy;
 
 class EnvoyTask extends Task {
@@ -22,6 +21,10 @@ class EnvoyTask extends Task {
     $config = $plugin->getEnvoysConfig();
     $prefix = $config->get('prefix');
     if($plugin->time == 0) {
+      if (is_null($server->getWorldManager()->getWorldByName($config->get('world')))){
+        $server->getLogger()->error("The world specified in the Envoys config.yml does not exist, so envoys weer nto spawned! :(");
+        return;
+      }
       $playercount = 0;
       $world = $server->getWorldManager()->getWorldByName($config->get('world'));
       foreach ($world->getEntities() as $entity) {
