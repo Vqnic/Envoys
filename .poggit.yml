@@ -5,4 +5,7 @@ branches:
 projects:
   BloodyEnvoys:
     path: ""
+    libs:
+      - src: cooldogedev/libSQL/libSQL
+        version: ^0.1.2
 ...
