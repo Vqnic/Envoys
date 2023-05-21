@@ -38,7 +38,6 @@ class Main extends \pocketmine\plugin\PluginBase {
     //DISABLE PLUGIN IF YOUR WORLD ISN'T CORRECT!!!
     if (is_null($this->getServer()->getWorldManager()->getWorldByName($this->config->get('world')))){
       $this->getServer()->getLogger()->error("The world specified in the Envoys config.yml does not exist! (Did you just install the plugin?) Disabling the plugin to prevent future crashes.");
-      $this->getServer()->getPluginManager()->disablePlugin($this);
     }
     
     $envoys = yaml_parse_file($this->getDataFolder() . 'locations.yml');
