@@ -2,7 +2,7 @@ name: BloodyEnvoys
 authors: ["Vanic"]
 description: BloodyEnvoys
 api: [4.0.0]
-version: 1.0.0
+version: 1.1.0
 main: Vanic\Bloody\Envoys\Main
 load: POSTWORLD
 softdepend:
