@@ -14,10 +14,8 @@ use pocketmine\world\ChunkLoader;
 use pocketmine\world\format\Chunk;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\event\entity\EntityDamageEvent;
-use cooldogedev\BedrockEconomy\api\BedrockEconomyAPI;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\world\particle\HugeExplodeSeedParticle;
-use cooldogedev\BedrockEconomy\libs\cooldogedev\libSQL\context\ClosureContext;
 
 class Envoy extends Human implements ChunkLoader {
   
@@ -56,16 +54,7 @@ class Envoy extends Human implements ChunkLoader {
           $this->flagForDespawn();
           $config = Main::getInstance()->getEnvoysConfig();
           $coins = mt_rand($config->get("min-coins-t$this->tier"), $config->get("max-coins-t$this->tier"));
-          BedrockEconomyAPI::legacy()->addToPlayerBalance(
-            $damager->getName(),
-            $coins,
-            ClosureContext::create(
-              function (bool $wasUpdated): void {
-                var_dump($wasUpdated);
-              },
-            )
-          );
-          $damager->sendPopup(str_replace("{coins}", $coins, $config->get('envoy-claimed')));
+          Utils::addMoney($damager, $coins);
         }
         $this->setProgress($this->getProgress() - 1);
         $this->setScoreTag("§l§8(§7PROGRESS§8)§r\n" . Utils::createProgressBar($this->getProgress(), 10 * $this->tier));

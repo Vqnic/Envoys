@@ -17,6 +17,8 @@ online-to-spawn: 0 #How many players need to be online for envoys to spawn? Set 
 
 world: "world" #Which world should the envoys spawn in?
 
+economy-plugin: "BedrockEconomy" #Must say EXACTLY "BedrockEconomy" OR "EconomyAPI"!!
+
 #TIER I ENVOY
 min-coins-t1: 12500
 max-coins-t1: 125000

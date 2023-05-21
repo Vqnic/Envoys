@@ -6,13 +6,14 @@ use pocketmine\world\World;
 use pocketmine\entity\Human;
 use pocketmine\utils\Config;
 use pocketmine\entity\Location;
+use pocketmine\plugin\PluginBase;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\entity\EntityFactory;
 use Vanic\Bloody\Envoys\Entity\Envoy;
 use pocketmine\entity\EntityDataHelper;
 use Vanic\Bloody\Envoys\Entity\AnimationEntity;
 
-class Main extends \pocketmine\plugin\PluginBase {
+class Main extends PluginBase {
   
   private static Main $instance;
   
@@ -35,9 +36,11 @@ class Main extends \pocketmine\plugin\PluginBase {
       $this->saveResource("Envoy_$i.json");
     }
     
+    Utils::init($this);
     //DISABLE PLUGIN IF YOUR WORLD ISN'T CORRECT!!!
     if (is_null($this->getServer()->getWorldManager()->getWorldByName($this->config->get('world')))){
-      $this->getServer()->getLogger()->error("The world specified in the Envoys config.yml does not exist! (Did you just install the plugin?) THE PLUGIN WILL NOT WORK AS EXPECTED UNTIL THIS IS RESOLVED!");
+      $this->getServer()->getLogger()->warning("The WORLD specified in the BloodyEnvoys config.yml is NOT LOADED or DOES NOT EXIST! (Did you just install the plugin?)");
+      $this->getServer()->getLogger()->error("BLOODYENVOYS WILL **NOT** WORK AS EXPECTED UNTIL THIS IS RESOLVED!");
     }
     
     $envoys = yaml_parse_file($this->getDataFolder() . 'locations.yml');
@@ -59,7 +62,7 @@ class Main extends \pocketmine\plugin\PluginBase {
       return new Envoy(EntityDataHelper::parseLocation($nbt, $world), Utils::getEnvoySkin(1));
     }, ["Envoy"]);
     
-    $this->getScheduler()->scheduleRepeatingTask(new EnvoyTask($this), 20 * 60 * $this->time);
+    $this->getScheduler()->scheduleRepeatingTask(new EnvoyTask($this), 5 * 60 * $this->time);
   }
   
   public static function getInstance(): Main {

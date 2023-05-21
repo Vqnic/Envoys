@@ -3,14 +3,35 @@
 namespace Vanic\Bloody\Envoys;
 
 use pocketmine\entity\Skin;
+use pocketmine\player\Player;
+use onebone\economyapi\EconomyAPI;
+use cooldogedev\BedrockEconomy\api\BedrockEconomyAPI;
+use cooldogedev\BedrockEconomy\libs\cooldogedev\libSQL\context\ClosureContext;
 
 class Utils {
   
   private static Main $main;
   
+  private static mixed $eco;
+  
+  private static bool $validEconomy = false;
+  
+  private static $selector;
+  
+  
+  public static function init(Main $plugin) {
+    self::$main = $plugin;
+    $server = self::$main->getServer();
+    self::$eco = self::$main->getEnvoysConfig()->get('economy-plugin');
+    if (is_null($server->getPluginManager()->getPlugin(self::$eco))) {
+      $server->getLogger()->warning("The ECONOMY PLUGIN specified in the BloodyEnvoys config.yml is NOT INSTALLED or has been INCORRECTLY TYPED! (Did you just install the plugin?)");
+      $server->getLogger()->warning("Valid values are 'BedrockEconomy', 'Capital', or 'EconomyAPI' ... you have provided '" . self::$eco . "', but that plugin does not exist on this server!");
+      $server->getLogger()->error("BLOODYENVOYS WILL **NOT** WORK AS EXPECTED UNTIL THIS IS RESOLVED!");
+    } else
+      self::$validEconomy = true;
+  }
+  
   public static function getEnvoySkin(int $tier) : Skin {
-    self::$main = Main::getInstance();
-    
     //Definitely ->  NOT  <- my code here. (Heh.) This bit was borrowed from a public plugin.
     $path = self::$main->getDataFolder() . "Envoy_$tier.png";
     $img = @imagecreatefrompng($path);
@@ -29,7 +50,7 @@ class Utils {
     
     @imagedestroy($img);
     
-    return new Skin("Custom", $skinbytes, "", "geometry.Envoy", file_get_contents(self::$main::getInstance()->getDataFolder() . "Envoy_$tier.json"));
+    return new Skin("Custom", $skinbytes, "", "geometry.Envoy", file_get_contents(self::$main->getDataFolder() . "Envoy_$tier.json"));
   }
   
   public static function createProgressBar(int $progress, int $max): string {
@@ -47,5 +68,25 @@ class Utils {
     elseif($hearts === 1)
       return "§6▅§r";
     return "§4▁§r";
+  }
+  
+  public static function addMoney(Player $player, int $coins) : void {
+    if (!self::$validEconomy) {
+      self::$main->getServer()->getLogger()->warning("$$coins could not be given to $player because of an invalid economy plugin! Check your BloodyEnvoys config.yml and your installed plugins!");
+      return;
+    }
+    switch(self::$eco){
+      case 'BedrockEconomy':
+        BedrockEconomyAPI::legacy()->addToPlayerBalance(
+          $player->getName(),
+          $coins
+        );
+        break;
+
+      case 'EconomyAPI':
+        EconomyAPI::getInstance()->addMoney($player, $coins);
+        break;
+    }
+    $player->sendPopup(str_replace("{coins}", $coins, self::$main->getEnvoysConfig()->get('envoy-claimed')));
   }
 }
