@@ -42,7 +42,7 @@ prefix: "§l§6ENVOYS §8>§r§7> "
 envoys-spawned: "§gEnvoys have spawned!"
 envoy-claimed: "§g+ §7${coins}§g!" #POPUP, NOT MESSAGE!!!
 envoys-timer: "§gEnvoys will spawn in §7{time}§g minutes!"
-envoys-not-enough-players: "&o§cThere aren't enough players for envoys to spawn!"
+envoys-not-enough-players: "§cThere aren't enough players for envoys to spawn!"
 ```
 
 ## LOCATIONS FILE
