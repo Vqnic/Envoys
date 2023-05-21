@@ -34,7 +34,6 @@ class EnvoyTask extends Task {
           $playercount++;
       }
       if ($playercount >= $config->get('online-to-spawn')) {
-        $plugin->time = $config->get('time-to-spawn');
         $server->broadcastMessage($prefix . $config->get('envoys-spawned'));
         $server->broadcastMessage($prefix . str_replace("{time}", $plugin->time, $config->get('envoys-timer')));
         for ($i = 0; $i < 4; $i++) {
@@ -45,6 +44,7 @@ class EnvoyTask extends Task {
       }else{
         $server->broadcastMessage($prefix .  $config->get('envoys-not-enough-players'));
       }
+      $plugin->time = $config->get('time-to-spawn');
     } else {
       switch ($plugin->time) {
         case 30;
