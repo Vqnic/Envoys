@@ -62,7 +62,7 @@ class Main extends PluginBase {
       return new Envoy(EntityDataHelper::parseLocation($nbt, $world), Utils::getEnvoySkin(1));
     }, ["Envoy"]);
     
-    $this->getScheduler()->scheduleRepeatingTask(new EnvoyTask($this), 5 * 60 * $this->time);
+    $this->getScheduler()->scheduleRepeatingTask(new EnvoyTask($this), 20 * 60 * $this->time);
   }
   
   public static function getInstance(): Main {
