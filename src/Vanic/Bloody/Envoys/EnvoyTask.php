@@ -22,7 +22,7 @@ class EnvoyTask extends Task {
     $prefix = $config->get('prefix');
     if($plugin->time == 0) {
       if (is_null($server->getWorldManager()->getWorldByName($config->get('world')))){
-        $server->getLogger()->error("The world specified in the Envoys config.yml does not exist, so envoys weer nto spawned! :(");
+        $server->getLogger()->error("The world specified in the Envoys config.yml does not exist, so envoys were not spawned! :(");
         return;
       }
       $playercount = 0;
