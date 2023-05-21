@@ -12,7 +12,7 @@ https://poggit.pmmp.io/p/bedrockeconomy
 
 
 ## COMES WITH PREMADE (AND EDITABLE) MODELS
-<img src="https://github.com/Vqnic/BloodyEnvoys/assets/77890259/1cdd3612-e497-4b22-a750-aa7c223f8524"  width="600" height="600">
+<img src="https://github.com/Vqnic/BloodyEnvoys/assets/77890259/1cdd3612-e497-4b22-a750-aa7c223f8524"  width="400" height="400">
 
 ## CONFIG FILE
 ```
