@@ -9,6 +9,8 @@ This is a simple Envoys plugin which enables you to have random treasure chests 
 
 ## ECONOMY PLUGIN REQUIREMENTS (!!!)
 https://poggit.pmmp.io/p/bedrockeconomy
+OR
+https://poggit.pmmp.io/p/economyapi
 
 
 ## COMES WITH PREMADE (AND EDITABLE) MODELS
