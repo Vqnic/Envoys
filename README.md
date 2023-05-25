@@ -1,7 +1,4 @@
-<img src="https://i.imgur.com/orRM0Ao.png"  width="600" height="175">
-
-
-[![Chat](https://img.shields.io/badge/chat-on%20discord-7289da.svg)](https://discord.gg/ADEz9KBAW9)
+![logo](https://github.com/Vqnic/BloodyEnvoys/assets/77890259/8bf0e476-70d3-4de6-aa1d-1fad60d679c9)
 
 # WHAT IS THIS?
 This is a simple Envoys plugin which enables you to have random treasure chests spawn in your warzone! Different tiers of envoys drop a different amount of coins! 
@@ -80,3 +77,6 @@ example-envoy4:
   yaw: 90
   pitch: 90
   ```
+  
+[![Chat](https://img.shields.io/badge/chat-on%20discord-7289da.svg)](https://discord.gg/ADEz9KBAW9)
+
