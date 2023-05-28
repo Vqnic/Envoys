@@ -18,67 +18,79 @@ use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\world\particle\HugeExplodeSeedParticle;
 
 class Envoy extends Human implements ChunkLoader {
+
+	private int $tier;
+	private int $progress;
+	private array $coins = [];
+	private string $itemation;
   
-  private int $tier;
+	public function __construct(Location $location, Skin $skin, ?CompoundTag $nbt = null, array $data) {
+		$location->getWorld()->registerChunkLoader($this, $location->getFloorX() >> Chunk::COORD_BIT_SIZE, $location->getFloorZ() >> Chunk::COORD_BIT_SIZE, true);
+		$this->setCanSaveWithChunk(false);
+		parent::__construct($location, $skin, $nbt);
+		$this->tier = $data["tier"];
+		$this->coins = $data["coinlimit"];
+		$this->setScale($this->tier * 0.3 + 1);
+		$this->progress = 10 * $this->tier;
+
+		$this->setImmobile();
+		$this->setNameTagAlwaysVisible();
+		$this->setNameTag("§f§l". $data["displayname"] ."\n§7Smash to open!");
+		$this->setScoreTag("§l§8(§7PROGRESS§8)§r\n" . Utils::createProgressBar($this->getProgress(), $this->getProgress()));
+		
+		//let's just keep it :>
+		$this->itemation = $data["itemation"];
+	}
   
-  private int $progress;
+	public function attack(EntityDamageEvent $source): void {
+		$source->cancel();
+		if ($source instanceof EntityDamageByEntityEvent && $source->getCause() == EntityDamageEvent::CAUSE_ENTITY_ATTACK) {
+			$damager = $source->getDamager();
+			if ($damager instanceof Player && $damager->isSurvival()) {
+				if ($this->getProgress() <= 0) {
+					for ($i = 0; $i < 20; $i++) {
+						$this->getWorld()->addParticle($this->getLocation(), new HugeExplodeSeedParticle());
+						$gems = new AnimationEntity($this->getLocation(), $this->tier);
+						$gems->setMotion(new Vector3(lcg_value() * 0.5 - 0.1, 1, lcg_value() * 0.5 - 0.1));
+						$gems->spawnToAll();
+					}
+					$this->flagForDespawn();
+					$coins = mt_rand($this->coins[0], $this->coins[1]);
+					Utils::addMoney($damager, $coins);
+				}
+
+				$this->progress -= 1;
+				$this->setScoreTag("§l§8(§7PROGRESS§8)§r\n" . Utils::createProgressBar($this->progress, 10 * $this->tier));
+				$this->updateMovement();
+				
+				$gem = new AnimationEntity($this->getLocation(), $this->itemation);
+				for ($i = 0; $i < 5; $i++) {
+					$gem->setMotion(new Vector3(lcg_value() * (mt_rand(0, 1) ? -0.5 : 0.5), 0.5, lcg_value() * (mt_rand(0, 1) ? -0.5 : 0.5)));
+					$gem->spawnToAll();
+				}
+				
+				if ($this->tier >= 2) {
+					//fireworks here, soon
+				}
+
+				if ($this->tier >= 3) {
+					//lightning here, soon
+				}
+				
+				//yes the purpose is that the higher tier will get all the sfx
+			}
+		}
+	}
   
-  public function __construct(Location $location, Skin $skin, ?CompoundTag $nbt = null, ?int $tier = 1) {
-    $location->getWorld()->registerChunkLoader($this, $location->getFloorX() >> Chunk::COORD_BIT_SIZE, $location->getFloorZ() >> Chunk::COORD_BIT_SIZE, true);
-    $this->setCanSaveWithChunk(false);
-    parent::__construct($location, $skin, $nbt);
-    
-    
-    $this->tier = $tier;
-    $this->setScale($tier * 0.3 + 1);
-    $this->progress = 10 * $tier;
+	public function setMotion(Vector3 $motion): bool {
+		return false;
+	}
   
-    $this->setImmobile();
-    $this->setNameTagAlwaysVisible();
-    $this->setNameTag("§f§lTIER $tier ENVOY\n§7Smash to open!");
-    $this->setScoreTag("§l§8(§7PROGRESS§8)§r\n" . Utils::createProgressBar($this->getProgress(), $this->getProgress()));
-  }
+	public function getProgress() : int {
+		return $this->progress;
+	}
   
-  public function attack(EntityDamageEvent $source): void {
-    $source->cancel();
-    if ($source instanceof EntityDamageByEntityEvent && $source->getCause() == EntityDamageEvent::CAUSE_ENTITY_ATTACK) {
-      $damager = $source->getDamager();
-      if ($damager instanceof Player && $damager->isSurvival()) {
-        if ($this->getProgress() <= 0) {
-          for ($i = 0; $i < 20; $i++) {
-            $this->getWorld()->addParticle($this->getLocation(), new HugeExplodeSeedParticle());
-            $gems = new AnimationEntity($this->getLocation(), $this->tier);
-            $gems->setMotion(new Vector3(lcg_value() * 0.5 - 0.1, 1, lcg_value() * 0.5 - 0.1));
-            $gems->spawnToAll();
-          }
-          $this->flagForDespawn();
-          $config = Main::getInstance()->getEnvoysConfig();
-          $coins = mt_rand($config->get("min-coins-t$this->tier"), $config->get("max-coins-t$this->tier"));
-          Utils::addMoney($damager, $coins);
-        }
-        $this->setProgress($this->getProgress() - 1);
-        $this->setScoreTag("§l§8(§7PROGRESS§8)§r\n" . Utils::createProgressBar($this->getProgress(), 10 * $this->tier));
-        $this->updateMovement();
-        for ($i = 0; $i < 5; $i++) {
-          $gems = new AnimationEntity($this->getLocation(), $this->tier);
-          $gems->setMotion(new Vector3(lcg_value() * (mt_rand(0, 1) ? -0.5 : 0.5), 0.5, lcg_value() * (mt_rand(0, 1) ? -0.5 : 0.5)));
-          $gems->spawnToAll();
-        }
-      }
-      parent::attack($source);
-    }
-  }
-  
-  public function setMotion(Vector3 $motion): bool {
-    return false;
-  }
-  
-  public function getProgress() : int {
-    return $this->progress;
-  }
-  
-  public function setProgress($progress) : void {
-    $this->progress = $progress;
-  }
-  
+	public function setProgress($progress) : void {
+		$this->progress = $progress;
+	}
 }

@@ -10,33 +10,55 @@
 #                                              \$$$$$$  |
 #                                               \______/
 
+setting:
+  world:
+    forceload: true
 
-time-to-spawn: 30  #How much time, in minutes, should it take for envoys to spawn?
+  spawn:
+    online: 0
+    cooldown: 1
+  economy: "EconomyAPI"
 
-online-to-spawn: 0 #How many players need to be online for envoys to spawn? Set to zero to disable!
+worlds:
+#support to multiple world
+#having in mind that we don't want
+#players to choose which world to go
+#we will count the online players instead
+#and randomly select a world below..
+#p.s at least 1 world is enough.
+  world:
+    - displayname: "Tier 1"
+      tier: 1
+      texture: "tier1"
+      coinlimit: [700, 1000]
+      itemation: "minecraft:stone" #item animation ;) yes you may now use whatever you desire
+      location: [100, 100, 100, 90, 90] #x y z yaw pitch
 
-world: "world" #Which world should the envoys spawn in?
+#################################################################################
+#NOTE ON TEXTURE:                                                               #
+# 1) texture name is now FOLDER inside them is texture.png and geometry.json    #
+#    example: BloodyEnvoys/texture/tier1/                                       #
+#                - texture.png                                                  #
+#                - geometry.json                                                # 
+# 2) geometry identifier should be the same with texture                        #
+#    example: geometry.tier1                                                    #
+#################################################################################
 
-economy-plugin: "BedrockEconomy" #Must say EXACTLY "BedrockEconomy" OR "EconomyAPI"!!
+#########################################################
+# Plugin Messages :D                                    #
+# Placeholders:                                         #
+# {coin} - coin received (for popup only)               #
+# {cooldown} - the cooldown                             #
+# {time} - time before spawn                            #
+# {world} - the world folder                            #
+# {online} - needed player                              #
+#########################################################
+message:
+  prefix: "§l§6ENVOYS §8>§r§7>"
+  chat:
+    spawned: "§gEnvoys have spawned at {world}"
+    next_spawn: "§gEnvoys will spawn in §7{time}§g minute(s)!"
+    not_enough_players: "§cEnvoys need {online} players to spawn! Next schedule: {cooldown} minute(s)"
 
-#TIER I ENVOY
-min-coins-t1: 12500
-max-coins-t1: 125000
-#TIER II ENVOY
-min-coins-t2: 25000
-max-coins-t2: 250000
-#TIER III ENVOY
-min-coins-t3: 50000
-max-coins-t3: 500000
-#TIER IV ENVOY
-min-coins-t4: 100000
-max-coins-t4: 1000000
-
-
-#Plugin Messages :D
-#Placeholders are {coins} and {time}!
-prefix: "§l§6ENVOYS §8>§r§7> "
-envoys-spawned: "§gEnvoys have spawned!"
-envoy-claimed: "§g+ §7${coins}§g!" #POPUP, NOT MESSAGE!!!
-envoys-timer: "§gEnvoys will spawn in §7{time}§g minute(s)!"
-envoys-not-enough-players: "§cThere aren't enough players online for the envoys to spawn!"
+  popup:
+    claimed: "§g+ §7${coins}§g!"
