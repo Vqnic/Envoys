@@ -20,63 +20,60 @@ If you want to see some assets I have made myself, please refer to https://githu
 
 ## CONFIG FILE
 ```
-time-to-spawn: 30  #How much time, in minutes, should it take for envoys to spawn?
+setting:
+  world:
+    forceload: true
 
-online-to-spawn: 0 #How many players need to be online for envoys to spawn? Set to zero to disable!
+  spawn:
+    online: 0 #number of players online to spawn envoys
+    cooldown: 1
+  economy: "EconomyAPI"
 
-world: "world" #Which world should the envoys spawn in?
+worlds:
+  world:
+    - displayname: "Tier 1" #name which is shown on top of the envoy
+      tier: 1 #determines how big and how much hits an envoy can take
+      texture: "tier1" #the folder, see note below
+      coinlimit: [700, 1000]
+      itemation: "minecraft:stone" #drop effects, leave empty "" to randomize between iron->emerald
+      location: [100, 100, 100, 90, 90] #x y z yaw pitch
+      
+    - displayname: "Some Tier 2 Envoy"
+      tier: 2
+      texture: "tier2"
+      coinlimit: [7000, 1000]
+      itemation: "minecraft:spider_eye"
+      location: [100, 100, 200, 90, 90]
+      
+########################################################
+# NOTE ON TEXTURE:                                     #
+# 1) texture name is now the FOLDER name and inside    #
+#    it are texture.png and geometry.json              #
+#    example: BloodyEnvoys/texture/tier1/              #
+#                - texture.png                         #
+#                - geometry.json                       #
+# 2) geometry identifier should be the same as texture #
+#    example: geometry.tier1                           #
+#                                                      #
+#########################################################
+# Plugin Messages :D                                    #
+# Placeholders:                                         #
+# {coin} - coin received (for popup only)               #
+# {cooldown} - the cooldown                             #
+# {time} - time before spawn                            #
+# {world} - the world folder                            #
+# {online} - needed player                              #
+#########################################################
+message:
+  prefix: "§l§6ENVOYS §8>§r§7>"
+  chat:
+    spawned: "§gEnvoys have spawned at {world}"
+    next_spawn: "§gEnvoys will spawn in §7{time}§g minute(s)!"
+    not_enough_players: "§cEnvoys need {online} players to spawn! Next schedule: {cooldown} minute(s)"
 
-#TIER I ENVOY
-min-coins-t1: 12500
-max-coins-t1: 125000
-#TIER II ENVOY
-min-coins-t2: 25000
-max-coins-t2: 250000
-#TIER III ENVOY
-min-coins-t3: 50000
-max-coins-t3: 500000
-#TIER IV ENVOY
-min-coins-t4: 100000
-max-coins-t4: 1000000
-
-
-#Plugin Messages :D
-#Placeholders are {coins} and {time}!
-prefix: "§l§6ENVOYS §8>§r§7> "
-envoys-spawned: "§gEnvoys have spawned!"
-envoy-claimed: "§g+ §7${coins}§g!" #POPUP, NOT MESSAGE!!!
-envoys-timer: "§gEnvoys will spawn in §7{time}§g minutes!"
-envoys-not-enough-players: "§cThere aren't enough players for envoys to spawn!"
+  popup:
+    claimed: "§g+ §7${coins}§g!"
 ```
-
-## LOCATIONS FILE
-```
-#YOU CAN ADD AS MANY AS YOU LIKE! :D
-example-envoy:
-  x: 100
-  y: 100
-  z: 100
-  yaw: 90
-  pitch: 90
-example-envoy2:
-  x: -100
-  y: 100
-  z: 100
-  yaw: 90
-  pitch: 90
-example-envoy3:
-  x: 100
-  y: 100
-  z: -100
-  yaw: 90
-  pitch: 90
-example-envoy4:
-  x: -100
-  y: 100
-  z: -100
-  yaw: 90
-  pitch: 90
-  ```
   
 [![Chat](https://img.shields.io/badge/chat-on%20discord-7289da.svg)](https://discord.gg/ADEz9KBAW9)
 
